@@ -9,7 +9,7 @@ export default function HomePage() {
     <>
       <section>
         {/* TODO: replace with real intro copy - short, specific, no "passionate developer" language */}
-        <h1>Your Name</h1>
+        <h1>Brian Sonderen</h1>
         <p>
           I build full-stack web applications with React, TypeScript, and Node.
           This site collects the projects I&apos;ve shipped, what I&apos;m currently working

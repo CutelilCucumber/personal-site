@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import './globals.css';
+import './global.css';
 
 export const metadata: Metadata = {
-  title: 'Your Name',
+  title: 'Brian Sonderen',
   description: 'Developer portfolio and personal site.',
 };
 
@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <header className="site-header">
           <Link href="/" className="site-title">
-            Your Name
+            Brian Sonderen
           </Link>
           <nav>
             <ul className="nav-list">
@@ -36,7 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </header>
         <main>{children}</main>
         <footer className="site-footer">
-          <p>&copy; {new Date().getFullYear()} Your Name.</p>
+          <p>&copy; {new Date().getFullYear()} Brian Sonderen.</p>
         </footer>
       </body>
     </html>
