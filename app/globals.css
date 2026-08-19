@@ -1,0 +1,252 @@
+:root {
+  --max-width: 780px;
+  --bg: #12081f;
+  --bg-alt: #1e0e33;
+  --neon-pink: #ff2d95;
+  --neon-cyan: #00e5ff;
+  --neon-yellow: #ffd400;
+  --text: #f3eeff;
+  --text-muted: #b9a9d9;
+  --border: #3a1f5c;
+
+  --font-display: 'Press Start 2P', monospace;
+  --font-body: 'VT323', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  background:
+    repeating-linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.02) 0px,
+      rgba(255, 255, 255, 0.02) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    radial-gradient(circle at 50% 0%, var(--bg-alt) 0%, var(--bg) 60%);
+  font-family: var(--font-body);
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+a {
+  color: var(--neon-cyan);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--neon-pink);
+  text-decoration: underline;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  color: var(--neon-yellow);
+  text-shadow: 0 0 8px rgba(255, 212, 0, 0.35);
+}
+
+h1 {
+  font-size: 1.5rem;
+}
+
+h2 {
+  font-size: 1.1rem;
+  margin-top: 2.5rem;
+}
+
+h3 {
+  font-size: 0.85rem;
+}
+
+.site-header {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--neon-pink);
+  box-shadow: 0 1px 12px rgba(255, 45, 149, 0.35);
+}
+
+.site-title {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--neon-pink);
+  text-shadow: 0 0 10px rgba(255, 45, 149, 0.6);
+  text-decoration: none;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+}
+
+.nav-list a {
+  text-decoration: none;
+  color: var(--neon-cyan);
+}
+
+.nav-list a:hover {
+  color: var(--neon-pink);
+  text-decoration: none;
+  text-shadow: 0 0 6px currentColor;
+}
+
+main {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+
+.site-footer {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem;
+  color: var(--text-muted);
+  font-size: 1rem;
+  border-top: 2px solid var(--border);
+  text-align: center;
+}
+
+.project-card {
+  padding: 1.25rem 1rem;
+  margin-bottom: 1rem;
+  border: 2px solid var(--border);
+  border-left: 4px solid var(--neon-cyan);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.project-card h3 {
+  margin: 0 0 0.35rem;
+}
+
+.tech-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0;
+  margin: 0.75rem 0 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.tech-list li {
+  border: 1px solid var(--border);
+  padding: 0.1rem 0.5rem;
+  border-radius: 2px;
+}
+
+.cabinet {
+  border: 3px solid var(--neon-cyan);
+  box-shadow:
+    0 0 16px rgba(0, 229, 255, 0.45),
+    inset 0 0 30px rgba(0, 229, 255, 0.12);
+  background: #060310;
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+.hero-single {
+  min-height: calc(100vh - 100px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.hero-name {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.hero-title {
+  font-family: var(--font-body);
+  font-size: 1.4rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.1rem;
+  }
+  .site-title {
+    font-size: 0.65rem;
+  }
+}
+
+.skeeball {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.skeeball-hud {
+  display: flex;
+  gap: 1.5rem;
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  color: var(--neon-yellow);
+}
+
+.skeeball-canvas {
+  touch-action: none;
+  width: 100%;
+  max-width: 300px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.skeeball-hint {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  min-height: 1.5em;
+  margin: 0;
+}
+
+.skeeball-reset {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  color: var(--bg);
+  background: var(--neon-yellow);
+  border: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.skeeball-reset:hover {
+  background: var(--neon-pink);
+  color: var(--text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

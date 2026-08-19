@@ -1,4 +1,4 @@
-# personal-site
+# personal site
 
 Personal website and developer portfolio. Built with Next.js (App Router) and
 TypeScript. Mostly static — no database, no auth, no CMS.
@@ -43,3 +43,5 @@ npm run dev
 ```bash
 npm run build
 ```
+
+Deployed on Vercel.

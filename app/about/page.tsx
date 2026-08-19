@@ -1,4 +1,4 @@
-export const metadata = { title: 'About — Your Name' };
+export const metadata = { title: 'About — Brian Sonderen' };
 
 export default function AboutPage() {
   return (
