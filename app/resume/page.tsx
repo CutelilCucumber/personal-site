@@ -1,6 +1,7 @@
 import { getFeaturedProjects } from '@/lib/projects';
 import { EDUCATION, EXPERIENCE, SITE, SKILLS } from '@/lib/site';
 import { FileIcon } from '@/components/Icons';
+import { resumeHref } from '@/lib/assets';
 
 export const metadata = { title: 'Resume' };
 
@@ -18,7 +19,7 @@ export default function ResumePage() {
   return (
     <div className="section page resume-page">
       <div className="resume-actions no-print">
-        <a className="btn btn-primary" href={SITE.resumePdf} download>
+        <a className="btn btn-primary" href={resumeHref()} download="Brian_Sonderen_Resume.pdf">
           <FileIcon size={16} /> Download PDF
         </a>
       </div>
