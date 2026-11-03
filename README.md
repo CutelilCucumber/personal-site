@@ -42,4 +42,4 @@ pdfinfo public/Brian_Sonderen_Resume.pdf | grep Pages   # keep it at 1
 Coolify app **"Portfolio"** builds the `Dockerfile` (Node build stage, then nginx) from `main`.
 Domains: `briansonderen.com` and `www.` (nginx redirects www to the apex). Cloudflare Tunnel
 terminates TLS. To redeploy, push to `main` and hit Deploy in Coolify, or call
-`GET /api/v1/deploy?uuid=<app uuid>`.
+`POST /api/v1/deploy` with `{"uuid":"wrqsebqqs9awlnqkhb3h9nbe"}`.
