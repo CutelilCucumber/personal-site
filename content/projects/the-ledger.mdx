@@ -1,0 +1,20 @@
+---
+slug: "the-ledger"
+title: "The Ledger"
+summary: "A blog platform with a REST API and two React frontends: a public reader site and an author dashboard with rich-text editing and comment moderation."
+role: "Solo · full-stack"
+status: "Live"
+year: "2026"
+techStack: ["Node.js", "Express", "Prisma", "PostgreSQL", "React", "JWT"]
+github: "https://github.com/CutelilCucumber/Blog-Api"
+demo: "https://blog-api-public-two.vercel.app"
+featured: false
+order: 10
+---
+
+A full-stack blog with separate frontends for readers and authors, both using one Express REST API.
+
+- **JWT authentication** with role-based access: guests can comment, members can post, admins have full control.
+- Passwords hashed with **PBKDF2** using Node's built-in crypto module.
+- Author dashboard with drafts and publishing, a **TinyMCE** editor, and per-post comment moderation ([admin demo](https://blog-api-admin-sigma.vercel.app)).
+- Endpoints documented and tested with a Postman collection.

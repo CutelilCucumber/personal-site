@@ -1,6 +1,12 @@
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
-import { getProjectBySlug, getProjectSlugs } from '@/lib/projects';
+import remarkGfm from 'remark-gfm';
+import ProjectVisual from '@/components/ProjectVisual';
+import { ProjectLinks, TechList } from '@/components/ProjectCard';
+import { getAllProjects, getProjectBySlug, getProjectSlugs } from '@/lib/projects';
+
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return getProjectSlugs().map((slug) => ({ slug }));
@@ -8,42 +14,62 @@ export function generateStaticParams() {
 
 export function generateMetadata({ params }: { params: { slug: string } }) {
   const project = getProjectBySlug(params.slug);
-  return { title: project ? `${project.title} — Your Name` : 'Project not found' };
+  if (!project) return { title: 'Project not found' };
+  return {
+    title: project.title,
+    description: project.summary,
+    openGraph: project.image ? { images: [project.image] } : undefined,
+  };
 }
 
 export default function ProjectPage({ params }: { params: { slug: string } }) {
   const project = getProjectBySlug(params.slug);
+  if (!project) notFound();
 
-  if (!project) {
-    notFound();
-  }
+  const all = getAllProjects();
+  const i = all.findIndex((p) => p.slug === project.slug);
+  const next = all[(i + 1) % all.length];
 
   return (
-    <article>
-      <h1>{project.title}</h1>
-      <p>{project.summary}</p>
+    <article className="section page case">
+      <Link href="/#work" className="back">
+        ← All work
+      </Link>
+      <header className="case-head">
+        <p className="eyebrow">
+          {project.status} · {project.year}
+        </p>
+        <h1>{project.title}</h1>
+        <p className="lede">{project.summary}</p>
+        <dl className="case-meta">
+          {project.role && (
+            <div>
+              <dt>Role</dt>
+              <dd>{project.role}</dd>
+            </div>
+          )}
+          <div>
+            <dt>Stack</dt>
+            <dd>
+              <TechList items={project.techStack} />
+            </dd>
+          </div>
+        </dl>
+        <ProjectLinks project={project} caseStudy={false} />
+      </header>
 
-      <ul className="tech-list">
-        {project.techStack.map((tech) => (
-          <li key={tech}>{tech}</li>
-        ))}
-      </ul>
+      <div className="case-visual">
+        <ProjectVisual project={project} />
+      </div>
 
-      <p>
-        <a href={project.github} target="_blank" rel="noreferrer">
-          View on GitHub
-        </a>
-        {project.demo && (
-          <>
-            {' · '}
-            <a href={project.demo} target="_blank" rel="noreferrer">
-              Live demo
-            </a>
-          </>
-        )}
-      </p>
+      <div className="prose case-body">
+        <MDXRemote source={project.content} options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }} />
+      </div>
 
-      <MDXRemote source={project.content} />
+      <nav className="case-next" aria-label="Next project">
+        <span className="meta">Next project</span>
+        <Link href={`/projects/${next.slug}/`}>{next.title} →</Link>
+      </nav>
     </article>
   );
 }

@@ -1,0 +1,46 @@
+---
+slug: "replay-radar"
+title: "BAR Replay Radar"
+summary: "Finds the Beyond All Reason matches worth watching — scans every ranked game, scores it 0–100, and tags comebacks, big fights, and nail-biters without spoiling the winner."
+role: "Solo · full-stack · self-hosted"
+status: "Live"
+year: "2026"
+techStack: ["TypeScript", "Fastify", "Prisma", "PostgreSQL", "React", "Docker"]
+highlights:
+  - "Indexes 175k+ matches against a third-party API capped at one concurrent request"
+  - "Moved ingestion from polling to webhooks mid-project with one shared analysis pipeline"
+  - "REST API with 20+ filterable attributes behind full-text and range search"
+github: ["https://github.com/CutelilCucumber/bar-replay-radar-backend", "https://github.com/CutelilCucumber/bar-replay-radar-frontend"]
+demo: "https://replayradar.briansonderen.com"
+image: "/projects/replay-radar.webp"
+imageAlt: "Replay Radar match list showing spectate scores, milestone tags, and lead graphs"
+featured: true
+order: 1
+---
+
+## The problem
+
+Beyond All Reason is an open-source RTS with thousands of ranked matches a day. Replays are public, but there's no way to tell which ones are worth an hour of your time — and the moment you see the result, the game is spoiled.
+
+## What I built
+
+A service that pulls match data from the community [gex](https://gex.honu.pw) API, replays each game's per-team stats minute by minute, and checks it against ~20 hand-tuned **milestones** — Comeback, Big Battle, Stomp, Nail Biter, T3 Rush and more. Each match gets a 0–100 *spectate score* and a set of tags. The React frontend lets you filter and sort by any of that, and keeps winners and milestones hidden until you choose to spoil them (the lead graphs are randomized while the result is hidden).
+
+## Architecture
+
+- **Fastify + TypeScript backend** with a plugin per concern: a rate-limited gex client, the scanner, and the routes.
+- **Two independent sweepers.** A *backfill* sweeper walks backward through history from the oldest match in the database. A *recent* sweeper re-walks the last ~7 hours every 6 hours to pick up matches gex hadn't finished processing on the first pass.
+- **Webhook ingestion.** Partway through, I moved the main ingestion path from polling to a gex webhook. I restructured the pipeline so the webhook handler and the sweepers call the same `fetch → analyze → insert` unit, which means they can't drift apart.
+- **PostgreSQL via Prisma**, with a schema built for the frontend's filters (20+ attributes, full-text and range queries).
+- **Self-hosted** in Docker on my own server through Coolify, with its own Postgres container.
+
+## Interesting problems
+
+- **A strict rate limit.** gex allows a 300-request bucket that refills at one request per second, with **one request in flight at a time**. Every sweeper shares a single rate limiter, and both check match IDs against the database in bulk *before* spending an API call.
+- **"Not ready yet" isn't an error.** The event endpoint returns `204` for matches it hasn't parsed yet. I modeled that as a discriminated union in the types instead of an exception, so retry logic is explicit and the compiler checks it.
+- **Silent data gaps.** Every response field is opt-in through `include*` flags, and two endpoints gate different fields behind different flags. A missing flag doesn't throw an error — the match just looks like it has no data. I tracked down the exact set of flags each call needs and documented why.
+- **Events that mean something else.** `unitsCreated` fires when construction *starts*, not when it finishes, so unit counts are filtered to fully built units before anything is scored.
+
+## What I learned
+
+How to design around an API you don't control, how to restructure a data pipeline without breaking what's already running, and how much of "backend work" is really understanding the source data better than its docs do.

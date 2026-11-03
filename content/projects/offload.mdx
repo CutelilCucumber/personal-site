@@ -1,0 +1,40 @@
+---
+slug: "offload"
+title: "Offload (SellShot)"
+summary: "Snap it, price it, sell it: photograph an item, let a vision model identify and price it, and push the listing to eBay."
+role: "Solo · full-stack"
+status: "Live"
+year: "2026"
+techStack: ["React", "Vite", "Express", "Prisma", "PostgreSQL", "OpenAI API", "eBay API"]
+highlights:
+  - "Vision-model item identification returning structured, typed listing data"
+  - "eBay OAuth and Inventory API integration for publishing listings"
+  - "Prisma schema for users, items, images, tags, and per-marketplace listings"
+github: "https://github.com/CutelilCucumber/sell-shot"
+demo: "https://sellshot.briansonderen.com"
+image: "/projects/sellshot.webp"
+imageAlt: "Offload landing page: Snap it. Price it. Sell it."
+featured: true
+order: 3
+---
+
+## The problem
+
+Selling second-hand clothes is tedious. You have to photograph the item, look up the brand, guess the size and condition, research a price, and then type the same details into every marketplace.
+
+## What I built
+
+Offload turns photos into listings. You upload images of an item, and a vision model returns structured data — title, brand, category, size, color, condition, material, and an estimated price — along with its confidence and reasoning. You review and edit the draft, then publish it to eBay through their Inventory API.
+
+## Architecture
+
+- **React + Vite frontend** with dynamic forms that adapt to whatever the model identified.
+- **Express 5 REST API** with JWT auth and role-based routes (guest, user, admin).
+- **Prisma + PostgreSQL.** Users, items, images, tags, and listings, plus per-user marketplace OAuth tokens so one item can be listed on several marketplaces.
+- **Image pipeline.** Multer uploads, `sharp` resizes and converts to WebP, and Supabase handles storage.
+- **AI layer.** A prompt that forces strict JSON output, with an optional reasoning mode. The full model response is stored alongside the item so I can audit it.
+- Deployed as a Docker image on my Coolify server with its own Postgres.
+
+## What I learned
+
+Third-party OAuth flows (eBay's is not gentle), getting reliable structured output out of an LLM, and modeling data so one product can map to many marketplace listings.

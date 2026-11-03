@@ -1,0 +1,41 @@
+---
+slug: "homelab"
+title: "Self-Hosted Platform"
+summary: "The Linux server that runs all of this: Coolify, Docker, and Traefik behind Cloudflare Tunnel, with no open inbound ports."
+role: "Design, setup, operations"
+status: "In production"
+year: "2025 – now"
+techStack: ["Linux", "Docker", "Coolify", "Traefik", "Cloudflare Tunnel", "Tailscale", "PostgreSQL"]
+highlights:
+  - "Hosts Replay Radar, Offload, Jam Wizard, and this site, each with its own database"
+  - "Public traffic comes in only through Cloudflare Tunnel; admin access only over Tailscale"
+  - "Git-push deploys through Coolify with Traefik routing per subdomain"
+featured: true
+order: 5
+---
+
+## Why
+
+Free-tier hosting kept putting my projects to sleep, and long-running services like Replay Radar's scanner don't fit serverless at all. So I run my own.
+
+## Setup
+
+- **Ubuntu server** at home running **Docker** with **Coolify** as the deployment layer: Git-based deploys, environment and secret management, and health checks.
+- **Traefik** reverse proxy routes each `*.briansonderen.com` subdomain to its container.
+- **Cloudflare Tunnel** carries all public traffic. The router has **no open inbound ports**, and Cloudflare handles TLS and DDoS protection.
+- **Tailscale** for SSH and admin access from anywhere without exposing management interfaces.
+- Each app has its **own PostgreSQL container**, and nothing is shared between projects.
+
+## What runs on it
+
+| Service | What it is |
+| --- | --- |
+| Replay Radar | Fastify API, scanner, webhook receiver, Postgres |
+| Offload | Express API + React client, Postgres |
+| Jam Wizard | nginx (WASM build), PeerJS signaling, coturn TURN relay, log collector |
+| This site | Static Next.js export served by nginx |
+| Tools | Media server and local AI model servers for game-art experiments |
+
+## What I learned
+
+Running real services myself means I own the whole chain: DNS, proxies, container health, database backups, and figuring out why something broke at 2 a.m. It's the most direct way I've found to learn what actually happens after you `git push`.

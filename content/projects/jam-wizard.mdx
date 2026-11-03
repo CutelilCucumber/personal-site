@@ -1,0 +1,48 @@
+---
+slug: "jam-wizard"
+title: "Jam Wizard"
+summary: "A browser arena platformer where you build spells on the fly by combining components, shapes, and modifiers — solo or in 4-player peer-to-peer co-op."
+role: "Solo · design, code, deployment"
+status: "Playtest on request"
+year: "2026"
+techStack: ["Godot 4.7", "GDScript", "WebRTC", "PeerJS", "nginx", "Docker"]
+highlights:
+  - "Grew out of an award-winning game-jam entry, still playable on itch.io"
+  - "29 spell components × 11 targeting shapes × 7 modifiers, each one changing every shape"
+  - "Host-authoritative 4-player co-op in the browser over WebRTC data channels"
+  - "Self-hosted web build: nginx, signaling, and TURN containers on Coolify"
+playtest: true
+links:
+  - label: "Jam version (itch.io)"
+    url: "https://brisonder.itch.io/jam-wizard"
+image: "/projects/jam-wizard.webp"
+imageAlt: "Jam Wizard gameplay: pixel-art wizard casting spells at enemies on floating platforms"
+featured: true
+order: 2
+---
+
+## Origin
+
+Jam Wizard started as a game-jam entry that won an award. The [original jam build](https://brisonder.itch.io/jam-wizard) is still playable on itch.io and in the bonus stage on my homepage. Since the jam I've rebuilt and expanded it into the game described here, which is in private playtesting. [Email me](mailto:sond.brian@gmail.com?subject=Jam%20Wizard%20playtest) if you'd like a key.
+
+## The idea
+
+Most spell systems hand you a fixed list of spells. In Jam Wizard you **build each spell as you cast it**: tap component keys (fire, frost, haste, leech…) to queue them, then click. Each mouse button sends the queue through the **targeting shape** bound to it — Projectile, Cone, Beam, Wave, Rune, Wall, Summon and more — and number keys toggle **modifiers** like Pierce, Homing, or Bounce that change every shape.
+
+Components hit whoever they land on, so fire on yourself burns you and haste on an enemy speeds it up. If you hesitate for five seconds the spell fizzles and every bound shape goes on cooldown. You fight endless rounds and unlock one of three random components after each one.
+
+![Casting a combined spell](/projects/jam-wizard-2.webp)
+
+## Multiplayer
+
+- **Up to 4 players in the browser**, joining with a 5-letter room code.
+- **Peer-to-peer over WebRTC data channels.** A PeerJS server only introduces the peers. After that, game traffic goes straight between browsers.
+- **Host-authoritative.** The host's browser runs the whole simulation. Other players stream their inputs and render snapshots the host sends 60 times a second (about 1.4 KB each).
+
+## Shipping it
+
+The web build runs on my home server as a Coolify stack: an **nginx** container serving the WebAssembly build with an invite gate, a **PeerJS** signaling server, a **coturn** TURN relay for players behind strict NATs, and a small log collector for playtest diagnostics.
+
+## Scope
+
+About 44,000 lines of GDScript, three playable characters, a sandbox mode with every spell and monster unlocked, wave defense, boss fights, and headless test scenes for damage tuning. Every design decision is written up in a spec as the build goes.

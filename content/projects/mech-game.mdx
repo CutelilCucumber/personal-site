@@ -1,0 +1,34 @@
+---
+slug: "mech-game"
+title: "Modular Mech Physics Game"
+summary: "A 3D game in development: build custom robots from parts and wreck fully destructible environments with deterministic physics."
+role: "Solo · gameplay, engine integration, 3D art pipeline"
+status: "In development"
+year: "2026"
+techStack: ["Godot 4.7", "GDScript", "C++ / GDExtension", "Box3D", "Blender", "ENet"]
+highlights:
+  - "Extended a C++ GDExtension from ~1/3 to near-complete coverage of the Box3D physics API"
+  - "Destructible buildings, fire, glass, and water systems, each researched and documented"
+  - "Deterministic physics recording and a headless dedicated-server build for multiplayer"
+featured: true
+order: 4
+---
+
+## What it is
+
+A physics-driven 3D game in which you assemble a mech from modular parts — legs, turrets, weapons — and fight across destructible city blocks, schools, and towers. The current priority is a 5–10 minute online multiplayer match.
+
+## Engine work
+
+The game uses **Box3D**, Erin Catto's new 3D physics engine, through a community Godot binding that exposed only about a third of Box3D's ~420 public C functions. I extended the C++ wrapper **additively** to cover nearly the whole remaining API from GDScript: diagnostics, region queries, solver tuning, and **deterministic recording and replay validation**. The extensions never touch upstream-owned files, so newer versions of Box3D can be merged in without conflicts.
+
+## Gameplay systems
+
+- A **parts system** with a strict scene contract, so new mech parts snap together predictably.
+- **Destructible construction.** Buildings break apart through recursive subdivision, and city levels are baked from Blender.
+- Separate research write-ups for **fire, glass, and water** before implementation, plus performance benchmarks comparing integrated and discrete GPUs.
+- A **multiplayer** layer: ENet bootstrap, a headless dedicated-server export, and a Docker image for deployment, with the handshake verified end to end.
+
+## Pipeline
+
+Models are built in Blender and brought into Godot through a custom tool for fixing mesh origins and pivots. The engine and the physics binding are new and thinly documented, so most problems get solved by building small test scenes and measuring.

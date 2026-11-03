@@ -1,47 +1,45 @@
-# personal site
+# briansonderen.com
 
-Personal website and developer portfolio. Built with Next.js (App Router) and
-TypeScript. Mostly static — no database, no auth, no CMS.
+Personal portfolio. Next.js (App Router) + TypeScript, exported as a **fully static site**
+and served by nginx from my home server via Coolify.
 
-## Structure
+## Where things live
 
 ```
-app/                  Routes (file-based)
-  page.tsx            Homepage
-  projects/           /projects and /projects/[slug]
-  now/, about/,
-  resume/, contact/   Static pages
-content/projects/      One .mdx file per project (frontmatter + case study)
-lib/projects.ts        Reads and types the files in content/projects/
-components/            Shared UI (ProjectCard, etc.)
-types/project.ts        Project type definition
+lib/site.ts            Name, links, bio, skills, experience, education: edit this first
+content/projects/*.mdx One file per project: frontmatter for cards, MDX body for the case study
+app/page.tsx           Homepage (hero, featured work, more projects, about, experience, contact, bonus stage)
+app/projects/          /projects and /projects/[slug] case studies
+app/resume/            HTML resume, also the source for the PDF
+components/            ProjectCard, ProjectVisual, JamWizardEmbed, icons
+public/                Images, og.png, favicon, Brian_Sonderen_Resume.pdf
 ```
 
-## Blog
+### Adding a project
+Copy an existing `.mdx` in `content/projects/`. `featured: true` puts it in the big
+alternating list on the homepage, `order` sorts it. Optional frontmatter: `demo`, `github`
+(string or [backend, frontend]), `image`, `highlights`, `playtest` (shows "Request playtest"),
+and `links` (extra buttons).
 
-`/blog` is reverse-proxied (see `next.config.js`) to a separate, existing
-full-stack blog app. This site doesn't host blog content directly.
-
-Set `BLOG_APP_ORIGIN` to the blog app's deployed URL before going live.
-
-## Adding a project
-
-Add a new `.mdx` file to `content/projects/`, using the existing files as a
-template for the frontmatter fields (`slug`, `title`, `summary`, `techStack`,
-`github`, `demo`, `featured`, `order`). The case study is written in the MDX
-body below the frontmatter.
-
-## Local development
-
+## Develop
 ```bash
 npm install
-npm run dev
+npm run dev        # http://localhost:3000
+npm run build      # static export to ./out
 ```
 
-## Build
-
+## Resume PDF
+The PDF is printed from `/resume` (print styles in `app/globals.css`), so it never contains
+my street address or phone number. After editing resume content:
 ```bash
-npm run build
+npm run build && npx serve out -l 4173 &
+google-chrome --headless=new --no-pdf-header-footer \
+  --print-to-pdf=public/Brian_Sonderen_Resume.pdf http://localhost:4173/resume/
+pdfinfo public/Brian_Sonderen_Resume.pdf | grep Pages   # keep it at 1
 ```
 
-Deployed on Vercel.
+## Deploy
+Coolify app **"Portfolio"** builds the `Dockerfile` (Node build stage, then nginx) from `main`.
+Domains: `briansonderen.com` and `www.` (nginx redirects www to the apex). Cloudflare Tunnel
+terminates TLS. To redeploy, push to `main` and hit Deploy in Coolify, or call
+`GET /api/v1/deploy?uuid=<app uuid>`.
