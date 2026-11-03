@@ -16,3 +16,8 @@ Things only Brian can do, in rough priority order.
 
 ## Maintenance
 - After changing the resume content, regenerate the PDF (see README → "Resume PDF") and commit it.
+
+## Infra notes
+- The Coolify dashboard is **no longer public**. Open it over Tailscale at http://100.98.115.24:8000 (or http://home-server:8000 with MagicDNS).
+  To undo: Coolify → Settings → Instance's Domain. Backup of the old proxy route: `/data/coolify/proxy/dynamic/coolify.yaml.pre-portfolio-*`.
+- Make sure your router does **not** forward port 8000 (or 6001/6002) to the server.
