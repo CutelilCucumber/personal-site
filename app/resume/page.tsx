@@ -7,9 +7,9 @@ export const metadata = { title: 'Resume' };
 // Rendered as a normal page AND printed to /Brian_Sonderen_Resume.pdf
 // by `npm run resume-pdf` (print styles live in globals.css).
 export default function ResumePage() {
-  // Mech game stays on the site but is left off the one-page PDF.
+  // Bot Shots stays on the site but is left off the one-page PDF.
   const projects = getFeaturedProjects()
-    .filter((p) => p.slug !== 'mech-game')
+    .filter((p) => p.slug !== 'bot-shots')
     .slice(0, 3);
   const host = SITE.url.replace(/^https?:\/\//, '');
   const gh = SITE.github.replace(/^https?:\/\//, '');

@@ -57,6 +57,15 @@ export default function HomePage() {
               <MailIcon />
             </a>
           </div>
+          <Link href="/projects/jam-wizard/" className="achievement">
+            <span className="achievement-icon" aria-hidden>
+              ★
+            </span>
+            <span>
+              <span className="achievement-label">Achievement unlocked</span>
+              People&apos;s Choice, DevX San Diego Game Jam 2026
+            </span>
+          </Link>
           <p className="open-to">
             <span className="dot" aria-hidden /> {SITE.openTo}
           </p>

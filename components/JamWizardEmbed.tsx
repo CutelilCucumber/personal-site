@@ -33,7 +33,7 @@ export default function JamWizardEmbed() {
         )}
       </div>
       <p className="embed-caption">
-        The original <strong>Jam Wizard</strong> game-jam build. Keyboard and mouse, desktop only. Q/E/R/F queue
+        The original <strong>Jam Wizard</strong> game-jam build, which won People&apos;s Choice at the DevX San Diego Game Jam. Keyboard and mouse, desktop only. Q/E/R/F queue
         components, left click casts.{' '}
         <a href={ITCH_PAGE} target="_blank" rel="noreferrer">
           Open on itch.io

@@ -341,8 +341,48 @@ main {
   flex-wrap: wrap;
   gap: 0.7rem;
 }
+.achievement {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 1.6rem;
+  padding: 0.55rem 1rem 0.55rem 0.6rem;
+  border: 1px solid rgba(255, 212, 0, 0.45);
+  border-radius: 8px;
+  background: rgba(255, 212, 0, 0.06);
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.3;
+}
+.achievement:hover {
+  color: var(--text);
+  border-color: var(--yellow);
+  box-shadow: 0 0 18px rgba(255, 212, 0, 0.25);
+}
+.achievement-icon {
+  font-size: 1.2rem;
+  color: var(--bg);
+  background: var(--yellow);
+  width: 2.1rem;
+  height: 2.1rem;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  box-shadow: 2px 2px 0 var(--pink);
+}
+.achievement-label {
+  display: block;
+  font-family: var(--pixel);
+  font-size: 0.5rem;
+  font-weight: 400;
+  color: var(--yellow);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
 .open-to {
-  margin-top: 1.5rem;
+  margin-top: 1.25rem;
   color: var(--muted);
   font-size: 0.92rem;
   display: flex;

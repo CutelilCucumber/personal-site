@@ -52,7 +52,7 @@ export const EXPERIENCE: Role[] = [
     bullets: [
       'Build and self-host full-stack apps (React, TypeScript, Fastify/Express, Prisma, PostgreSQL) used by real players and users.',
       'Operate a Linux home server running Coolify, Docker, and Traefik, exposed through Cloudflare Tunnel with no open inbound ports.',
-      'Develop browser and desktop games in Godot 4, including peer-to-peer co-op and a physics-driven 3D mech game.',
+      'Develop browser and desktop games in Godot 4, including peer-to-peer co-op and a physics-driven 3D mech game (Bot Shots).',
     ],
   },
   {
